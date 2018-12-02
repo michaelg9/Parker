@@ -9,5 +9,5 @@ from jukebox import Jukebox
 
 player = Jukebox()
 player.play()
-# print(player.get_user())
+print(player.get_user())
 player.clear()

@@ -2,16 +2,14 @@ import spotipy
 import spotipy.util as util
 
 class Jukebox:
-
-# export SPOTIPY_CLIENT_ID='0709595414ba4972898d1750c24387f2'
-# export SPOTIPY_CLIENT_SECRET='b918d42a7676425e91d573b80edc4d68'
-# export SPOTIPY_REDIRECT_URI='https://example.com/callback/'
+#pip3 install git+https://github.com/plamere/spotipy.git --upgrade
+    CLIENT_ID='0709595414ba4972898d1750c24387f2'
+    CLIENT_SECRET='86a399c8acb8442a89cef5b47a4ae4f5'
+    REDIRECT_URI='https://example.com/callback/'
 
     def __init__(self):
-        username = '0709595414ba4972898d1750c24387f2'
-        scope = 'playlist-modify-public'
-        token = util.prompt_for_user_token(username, scope, redirect_uri = 'https://example.com/callback/')
-
+        username = '12165139391'
+        token = util.prompt_for_user_token(self.CLIENT_ID, scope='playlist-modify-public user-modify-playback-state', client_id=self.CLIENT_ID, client_secret=self.CLIENT_SECRET, redirect_uri=self.REDIRECT_URI)
         if not token:
             print("Can't get token for", username)
             sys.exit()
@@ -19,14 +17,14 @@ class Jukebox:
         self.__sp = spotipy.Spotify(auth=token)
         self.__sp.trace = False
         self.__user = self.__sp.me()
-        self.__playlist = self.__sp.user_playlist_create(self.__user['id'], 'demo', public=True, description='')
+        self.__playlist = self.__sp.user_playlist_create(self.__user['id'], 'demo', public=True, description='Jukebox')
         self.__current_song = None
 
     def play(self, song_id='7clUVcSOtkNWa58Gw5RfD4'):
         self.append_song(song_id)
         self.append_song('4wtR6HB3XekEengMX17cpc')
         # uncomment with premium
-        self.__sp.start_playback(device_id = None, context_uri = self.__playlist['uri'], uris = None, offset = None)
+        self.__sp.start_playback(device_id=None, context_uri=self.__playlist['uri'], uris=None, offset = None)
 
     def clear(self):
         self.__sp.user_playlist_unfollow(self.__user['id'], self.__playlist['id'])
