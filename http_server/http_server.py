@@ -1,4 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from agent.agent import agent
+# from queue_dealer.queue_dealer import queue_dealer
 from ast import literal_eval
 from io import BytesIO
 
@@ -11,6 +13,16 @@ class http_handle(BaseHTTPRequestHandler):
 # Send Song{'action':'submit_song', song': <song_name>, 'artist': <artist_name>}
 # upvote {'action':'upvote', 'uri': <uri>}
 # downvote {'action':'downvote', 'uri': <uri>}
+    def evoke_command(self, command):
+        if command['action'] ==  'submit_song':
+            agent.send_song(command['song'], command['artist'])
+        elif command['action'] == 'upvote':
+            agent.upvote(command['uri'])
+        elif command['action'] == 'upvote':
+            agent.downvote(command['uri'])
+        else:
+            pass #return a message
+
 
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])

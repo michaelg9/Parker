@@ -43,7 +43,7 @@ class Jukebox:
     def get_playlist_size(self):
         self.__refresh_playlist()
         return self.__playlist['tracks']['total']
-    
+
     def get_currently_played(self):
         return self.__sp.current_user_playing_track()
 
