@@ -51,8 +51,8 @@ class Jukebox:
     def get_user(self):
         return self.__user
     
-    def get_song_uri(self, name, limit=1):
-        return self.__sp.search(name, type='track', limit=limit)['tracks']['items'][0]['uri']
+    def get_song_uri(self, name, artist, limit=1):
+        return self.__sp.search(q='track:{} artist:{}'.format(name, artist), limit=limit)['tracks']['items'][0]['uri']
 
     def next_song_exists(self):
         self.__refresh_playlist()
