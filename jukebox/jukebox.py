@@ -34,6 +34,7 @@ class Jukebox:
 
     def append_song(self, song_id):
         # assert self.__get_playlist_size() == 2
+
         self.__sp.user_playlist_add_tracks(self.__user['id'], self.__playlist['id'], [song_id], position=None)
         # assert self.__get_playlist_size() == 1
 
@@ -49,6 +50,9 @@ class Jukebox:
 
     def get_user(self):
         return self.__user
+    
+    def get_song_uri(self, name, limit=1):
+        return self.__sp.search(name, type='track', limit=limit)['tracks']['items'][0]['uri']
 
     def next_song_exists(self):
         self.__refresh_playlist()
